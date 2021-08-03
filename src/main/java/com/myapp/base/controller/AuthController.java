@@ -1,6 +1,7 @@
 package com.myapp.base.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,7 +34,7 @@ public class AuthController {
 	private UserDetailsService userDetailsService;
 	
 	
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest,
 			@RequestParam(value = "test", defaultValue = "false") boolean test) throws Exception {
 		System.out.println("value of test :  " + test);
