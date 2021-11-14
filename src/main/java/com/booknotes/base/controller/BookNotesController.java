@@ -72,9 +72,21 @@ public class BookNotesController {
 		return userService.getUser(new UserModel(userId));		
 	}
 	
-	@PostMapping("/addNote")
-	public String addNote(@RequestBody NoteModel noteModel, @RequestParam long bookId, @RequestParam long userId) {		 		
+	@PostMapping("/addNoteToBookAndUser")
+	public String addNoteToBookAndUser(@RequestBody NoteModel noteModel, @RequestParam long bookId, @RequestParam long userId) {		 		
 		bookService.addNote(noteModel, userId, bookId);	
+		return "Note added";
+	}
+	
+	@PostMapping("/addNote")
+	public String addNote(@RequestBody NoteModel noteModel) {		 		
+		noteService.saveNote(noteModel);	
+		return "Note added";
+	}
+	
+	@PostMapping("/deleteNote")
+	public String deleteNote(@RequestParam long noteId) {		 		
+		noteService.deleteNote(new NoteModel(noteId));
 		return "Note added";
 	}
 	

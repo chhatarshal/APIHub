@@ -12,5 +12,6 @@ public interface BookService {
 	public List<BookModel> getAllBooks();
 	public List<BookModel> getAllBooksForUser(UserModel userModel);
 	public BookModel deleteBook(BookModel bookModel);
-	public void addNote(NoteModel noteModel, long userId, long bookId);	
+	public void addNote(NoteModel noteModel, long userId, long bookId);
+	public void addNote(NoteModel noteModel);	
 }

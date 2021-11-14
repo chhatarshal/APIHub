@@ -28,5 +28,6 @@ public class Note {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="user_id", nullable=true)
 	private User user;
+	private String image;
 	
 }

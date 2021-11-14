@@ -80,6 +80,12 @@ public class BookServiceimpl implements BookService {
 		return book;
 	}
 
+	@Override
+	public void addNote(NoteModel noteModel) {
+		Note note = modelMapper.map(noteModel, Note.class);		
+		note = noteRepository.save(note);
+	}
+
 	
 
 	

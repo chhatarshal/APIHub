@@ -32,6 +32,7 @@ public class Book {
 	private String price;
 	private Date publishDate;
 	private String edition;
+	private String url;
 	private String tags;
 	@ManyToMany(mappedBy = "myBooks")
 	private List<User> users = new ArrayList<>();

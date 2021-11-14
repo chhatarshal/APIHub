@@ -37,5 +37,6 @@ public class BookModel {
 	private Date publishDate;
 	private String edition;
 	private String tags;
+	private String url;
 
 }
