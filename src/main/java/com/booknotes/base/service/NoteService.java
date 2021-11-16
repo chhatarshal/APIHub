@@ -13,5 +13,6 @@ public interface NoteService {
 	public List<NoteModel> getAllNotesForUser(UserModel userModel);
 	public List<NoteModel> getAllNotesForBook(BookModel bookModel);
 	public NoteModel deleteNote(NoteModel noteModel);
+	public NoteModel getNote(long id);
 	
 }

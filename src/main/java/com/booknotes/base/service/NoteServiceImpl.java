@@ -61,4 +61,9 @@ public class NoteServiceImpl implements NoteService {
 	    return noteModel;
 	}
 
+	@Override
+	public NoteModel getNote(long id) {
+		return convertToNoteModel(noteRepository.findById(id).get());
+	}
+
 }

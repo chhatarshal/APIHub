@@ -95,6 +95,11 @@ public class BookNotesController {
 		return noteService.getAllNotes();
 	}
 	
+	@GetMapping("/getAllNoteById")
+	public NoteModel getAllNoteById(@RequestParam long noteId) {
+		return noteService.getNote(noteId);
+	}
+	
 	@GetMapping("/test")
 	public String test() {		
 		return "test";		
