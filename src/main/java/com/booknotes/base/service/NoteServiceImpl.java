@@ -30,7 +30,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public List<NoteModel> getAllNotes() {
-		return noteRepository.findAll().stream().map(this::convertToNoteModel).collect(Collectors.toList());
+		return noteRepository.findAllByOrderByIdDesc().stream().map(this::convertToNoteModel).collect(Collectors.toList());
 	}
 
 	@Override
