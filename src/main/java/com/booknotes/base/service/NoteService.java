@@ -14,5 +14,8 @@ public interface NoteService {
 	public List<NoteModel> getAllNotesForBook(BookModel bookModel);
 	public NoteModel deleteNote(NoteModel noteModel);
 	public NoteModel getNote(long id);
+	public List<NoteModel> getAllPublishedNotes();
+	public boolean publishNote(long noteId);
+	public boolean unpublishNote(long noteId);
 	
 }

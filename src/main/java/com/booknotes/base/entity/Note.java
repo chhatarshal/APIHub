@@ -29,5 +29,10 @@ public class Note {
 	@JoinColumn(name="user_id", nullable=true)
 	private User user;
 	private String image;
+	private boolean publish;
+	private boolean privateNote;
+	private long viewCount;
+	private boolean important;
+	
 	
 }

@@ -63,7 +63,33 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public NoteModel getNote(long id) {
-		return convertToNoteModel(noteRepository.findById(id).get());
+		Note note = noteRepository.findById(id).get();
+		note.setViewCount(note.getViewCount() +1);
+		noteRepository.save(note);
+		return convertToNoteModel(note);
 	}
+
+	@Override
+	public List<NoteModel> getAllPublishedNotes() {
+		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> note.isPublish()).map(this::convertToNoteModel).collect(Collectors.toList());
+	}
+
+	@Override
+	public boolean publishNote(long noteId) {
+		Note note = noteRepository.findById(noteId).get();
+		note.setPublish(true);
+		noteRepository.save(note);
+		return true;
+	}
+	
+	@Override
+	public boolean unpublishNote(long noteId) {
+		Note note = noteRepository.findById(noteId).get();
+		note.setPublish(false);
+		noteRepository.save(note);
+		return true;
+	}
+	
+	
 
 }

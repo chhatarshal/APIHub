@@ -84,16 +84,32 @@ public class BookNotesController {
 		return "Note added";
 	}
 	
-	@PostMapping("/deleteNote")
+	@GetMapping("/deleteNote")
 	public String deleteNote(@RequestParam long noteId) {		 		
 		noteService.deleteNote(new NoteModel(noteId));
-		return "Note added";
+		return "Note deleted with id " + noteId;
+	}
+	
+	@GetMapping("/publishNote")
+	public boolean publishNote(@RequestParam long noteId) {		 		
+		return noteService.publishNote(noteId);
+	}
+	
+	@GetMapping("/unpublishNote")
+	public boolean unpublishNote(@RequestParam long noteId) {		 		
+		return noteService.unpublishNote(noteId);
 	}
 	
 	@GetMapping("/getAllNotes")
 	public List<NoteModel> getAllNotes() {
 		return noteService.getAllNotes();
 	}
+	
+	@GetMapping("/getAllPublishedNotes")
+	public List<NoteModel> getAllPublishedNotes() {
+		return noteService.getAllPublishedNotes();
+	}
+	
 	
 	@GetMapping("/getAllNoteById")
 	public NoteModel getAllNoteById(@RequestParam long noteId) {

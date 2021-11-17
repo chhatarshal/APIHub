@@ -19,5 +19,8 @@ public class NoteModel {
 	private String tags;
 	private String username;
 	private String image;
-	
+	private boolean publish;
+	private boolean privateNote;
+	private long viewCount;
+	private boolean important;
 }
