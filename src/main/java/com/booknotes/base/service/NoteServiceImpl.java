@@ -30,7 +30,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public List<NoteModel> getAllNotes() {
-		return noteRepository.findAllByOrderByIdDesc().stream().map(this::convertToNoteModel).collect(Collectors.toList());
+		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> !note.isDeleted()).map(this::convertToNoteModel).collect(Collectors.toList());
 	}
 
 	@Override
@@ -46,8 +46,15 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public NoteModel deleteNote(NoteModel noteModel) {
-		noteRepository.deleteById(noteModel.getId());
+	public NoteModel deleteNote(NoteModel noteModel, boolean softDelete) {
+		
+		if (softDelete) {
+			Note note = noteRepository.findById(noteModel.getId()).get();
+			note.setDeleted(true);
+			noteRepository.save(note);
+		} else {
+			noteRepository.deleteById(noteModel.getId());	
+		}
 		return noteModel;
 	}
 	
@@ -71,7 +78,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public List<NoteModel> getAllPublishedNotes() {
-		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> note.isPublish()).map(this::convertToNoteModel).collect(Collectors.toList());
+		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> !note.isDeleted()).filter(note -> note.isPublish()).map(this::convertToNoteModel).collect(Collectors.toList());
 	}
 
 	@Override
@@ -83,11 +90,40 @@ public class NoteServiceImpl implements NoteService {
 	}
 	
 	@Override
+	public boolean notePrivacy(boolean privateState, long noteId) {
+		Note note = noteRepository.findById(noteId).get();
+		note.setPrivateNote(privateState);
+				noteRepository.save(note);
+		return true;
+	}
+	
+	@Override
 	public boolean unpublishNote(long noteId) {
 		Note note = noteRepository.findById(noteId).get();
 		note.setPublish(false);
 		noteRepository.save(note);
 		return true;
+	}
+
+	@Override
+	public boolean vote(boolean up, long noteId) {
+		Note note = noteRepository.findById(noteId).get();
+		long upvoteCount = note.getUpvote();
+		if (up) {
+			upvoteCount = upvoteCount + 1; 
+			note.setUpvote(upvoteCount);
+		} else {
+			upvoteCount = upvoteCount - 1; 
+			note.setUpvote(upvoteCount);
+		}
+		note.setPublish(false);
+		noteRepository.save(note);
+		return true;
+	}
+
+	@Override
+	public List<NoteModel> getAllMyNotes(long userId) {
+		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> note.getAuthorId() == userId).filter(note -> !note.isDeleted()).filter(note -> note.isPublish()).map(this::convertToNoteModel).collect(Collectors.toList());
 	}
 	
 	

@@ -31,4 +31,6 @@ public class User {
 	private List<Book> myBooks = new ArrayList<>();
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
 	private List<Note> notes = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
+	private List<Role> roles = new ArrayList<>();
 }

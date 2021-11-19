@@ -1,40 +1,31 @@
 package com.booknotes.base.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
 @Entity
-public class Note {
-
+public class Role {
+	
 	@Id
 	@GeneratedValue
 	private long id;
 	private String name;
-	private String content;
-	private String details;
-	private String tags;
-	private String username;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="book_id", nullable=true)
-	private Book book;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="user_id", nullable=true)
 	private User user;
-	private String image;
-	private boolean publish;
-	private boolean privateNote;
-	private long viewCount;
-	private boolean important;
-	private boolean deleted;
-	private long upvote;
-	private long authorId;
-	
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "role")
+	private List<Permission> permissions = new ArrayList<>();
+
 }

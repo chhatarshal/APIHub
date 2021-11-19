@@ -85,8 +85,8 @@ public class BookNotesController {
 	}
 	
 	@GetMapping("/deleteNote")
-	public String deleteNote(@RequestParam long noteId) {		 		
-		noteService.deleteNote(new NoteModel(noteId));
+	public String deleteNote(@RequestParam long noteId, @RequestParam(defaultValue = "softDelete") boolean softDelete) {		 		
+		noteService.deleteNote(new NoteModel(noteId), softDelete);
 		return "Note deleted with id " + noteId;
 	}
 	
@@ -105,15 +105,29 @@ public class BookNotesController {
 		return noteService.getAllNotes();
 	}
 	
+	@GetMapping("/getAllMyNotes")
+	public List<NoteModel> getAllMyNotes(@RequestParam long userId) {
+		return noteService.getAllMyNotes(userId);
+	}
+	
 	@GetMapping("/getAllPublishedNotes")
 	public List<NoteModel> getAllPublishedNotes() {
 		return noteService.getAllPublishedNotes();
-	}
-	
+	}	
 	
 	@GetMapping("/getAllNoteById")
 	public NoteModel getAllNoteById(@RequestParam long noteId) {
 		return noteService.getNote(noteId);
+	}
+	
+	@GetMapping("/notePrivacy")
+	public boolean notePrivacy(@RequestParam boolean privateState, @RequestParam long noteId) {
+		return noteService.notePrivacy(privateState, noteId);
+	}
+	
+	@GetMapping("/vote")
+	public boolean vote(@RequestParam boolean up, @RequestParam long noteId) {
+		return noteService.vote(up, noteId);
 	}
 	
 	@GetMapping("/test")

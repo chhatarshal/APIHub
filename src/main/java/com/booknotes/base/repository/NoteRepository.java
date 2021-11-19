@@ -9,5 +9,8 @@ import com.booknotes.base.entity.Note;
 public interface NoteRepository  extends JpaRepository<Note, Long> {
 	
 	 public List<Note> findAllByOrderByIdDesc();
+	 // to do 
+	 // create a method to fetch notes for a particular user
+	// public List<Note> findAllByUser();
 
 } 

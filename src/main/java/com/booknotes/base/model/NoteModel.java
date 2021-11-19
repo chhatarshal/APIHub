@@ -23,4 +23,7 @@ public class NoteModel {
 	private boolean privateNote;
 	private long viewCount;
 	private boolean important;
+	private boolean deleted;
+	private long upvote;
+	private long authorId;
 }

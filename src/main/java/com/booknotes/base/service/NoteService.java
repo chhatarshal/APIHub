@@ -12,10 +12,12 @@ public interface NoteService {
 	public List<NoteModel> getAllNotes();
 	public List<NoteModel> getAllNotesForUser(UserModel userModel);
 	public List<NoteModel> getAllNotesForBook(BookModel bookModel);
-	public NoteModel deleteNote(NoteModel noteModel);
+	public NoteModel deleteNote(NoteModel noteModel, boolean softDelete);
 	public NoteModel getNote(long id);
 	public List<NoteModel> getAllPublishedNotes();
 	public boolean publishNote(long noteId);
 	public boolean unpublishNote(long noteId);
-	
+	public boolean notePrivacy(boolean privateState, long noteId);
+	public boolean vote(boolean up, long noteId);
+	public List<NoteModel> getAllMyNotes(long userId);
 }
