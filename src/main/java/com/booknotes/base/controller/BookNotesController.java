@@ -85,7 +85,7 @@ public class BookNotesController {
 	}
 	
 	@GetMapping("/deleteNote")
-	public String deleteNote(@RequestParam long noteId, @RequestParam(defaultValue = "softDelete") boolean softDelete) {		 		
+	public String deleteNote(@RequestParam long noteId, @RequestParam(defaultValue = "true") boolean softDelete) {		 		
 		noteService.deleteNote(new NoteModel(noteId), softDelete);
 		return "Note deleted with id " + noteId;
 	}

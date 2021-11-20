@@ -78,7 +78,8 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public List<NoteModel> getAllPublishedNotes() {
-		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> !note.isDeleted()).filter(note -> note.isPublish()).map(this::convertToNoteModel).collect(Collectors.toList());
+		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> !note.isDeleted()).
+				filter(note -> note.isPublish()).filter(note -> !note.isPrivateNote()).map(this::convertToNoteModel).collect(Collectors.toList());
 	}
 
 	@Override
