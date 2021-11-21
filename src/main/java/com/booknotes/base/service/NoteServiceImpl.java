@@ -126,6 +126,18 @@ public class NoteServiceImpl implements NoteService {
 	public List<NoteModel> getAllMyNotes(long userId) {
 		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> note.getAuthorId() == userId).filter(note -> !note.isDeleted()).filter(note -> note.isPublish()).map(this::convertToNoteModel).collect(Collectors.toList());
 	}
+
+	@Override
+	public void updateNote(NoteModel noteModel) {
+		Note note = noteRepository.findById(noteModel.getId()).get();
+		if (noteModel.getTitle() != null) {
+			note.setTitle(noteModel.getTitle());
+		}
+		if (noteModel.getDetails() != null) {
+			note.setDetails(noteModel.getDetails());
+		}
+		noteRepository.save(note);
+	}
 	
 	
 

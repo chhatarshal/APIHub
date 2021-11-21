@@ -20,4 +20,5 @@ public interface NoteService {
 	public boolean notePrivacy(boolean privateState, long noteId);
 	public boolean vote(boolean up, long noteId);
 	public List<NoteModel> getAllMyNotes(long userId);
+	public void updateNote(NoteModel noteModel);
 }

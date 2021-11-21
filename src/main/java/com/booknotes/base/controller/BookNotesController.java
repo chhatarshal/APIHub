@@ -84,6 +84,12 @@ public class BookNotesController {
 		return "Note added";
 	}
 	
+	@PostMapping("/updateNote")
+	public String updateNote(@RequestBody NoteModel noteModel) {		 		
+		noteService.updateNote(noteModel);	
+		return "Note updated";
+	}
+	
 	@GetMapping("/deleteNote")
 	public String deleteNote(@RequestParam long noteId, @RequestParam(defaultValue = "true") boolean softDelete) {		 		
 		noteService.deleteNote(new NoteModel(noteId), softDelete);

@@ -36,5 +36,7 @@ public class Note {
 	private boolean deleted;
 	private long upvote;
 	private long authorId;
+	private String authorName;
+	private String title;
 	
 }

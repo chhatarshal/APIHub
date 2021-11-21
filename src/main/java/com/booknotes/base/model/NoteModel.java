@@ -14,6 +14,7 @@ public class NoteModel {
 	}
 	private long id;
 	private String name;
+	private String title;
 	private String content;
 	private String details;
 	private String tags;
@@ -26,4 +27,5 @@ public class NoteModel {
 	private boolean deleted;
 	private long upvote;
 	private long authorId;
+	private String authorName;
 }
