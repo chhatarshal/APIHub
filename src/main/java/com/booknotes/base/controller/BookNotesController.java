@@ -72,6 +72,11 @@ public class BookNotesController {
 		return userService.getUser(new UserModel(userId));		
 	}
 	
+	@PostMapping("/User")
+	public UserModel addUser(@RequestParam Long userId) {		 		
+		return userService.getUser(new UserModel(userId));		
+	}
+	
 	@PostMapping("/addNoteToBookAndUser")
 	public String addNoteToBookAndUser(@RequestBody NoteModel noteModel, @RequestParam long bookId, @RequestParam long userId) {		 		
 		bookService.addNote(noteModel, userId, bookId);	
@@ -109,6 +114,16 @@ public class BookNotesController {
 	@GetMapping("/getAllNotes")
 	public List<NoteModel> getAllNotes() {
 		return noteService.getAllNotes();
+	}
+	
+	@GetMapping("/searchNotesByTags")
+	public List<NoteModel> searchNotesByTags(@RequestParam String tagContent) {
+		return noteService.searchNotesByTags(tagContent);
+	}
+	
+	@GetMapping("/getAllNotesIncludingDeleted")
+	public List<NoteModel> getAllNotesIncludingDeleted() {
+		return noteService.getAllNotesIncludingDeleted();
 	}
 	
 	@GetMapping("/getAllMyNotes")

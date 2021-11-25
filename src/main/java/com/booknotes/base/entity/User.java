@@ -33,4 +33,14 @@ public class User {
 	private List<Note> notes = new ArrayList<>();
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
 	private List<Role> roles = new ArrayList<>();
+	private String topics;
+	private String email;
+	private String phoneNumber;
+	private String linkedInURL;
+	private String fullName;
+	private String hobbies;
+	private String aboutMe;
+	private boolean individual;
+	private String organisationName;
+
 }

@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
 	private BookRepository bookRepository;
 	 
 	private ModelMapper modelMapper = new ModelMapper();	
-	
 
 	@Override
 	public UserModel saveUser(UserModel userModel) {
@@ -97,7 +96,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserModel getUserByNamePassword(UserModel userModel) {
-		User user = userRepo.findByUserName(userModel.getUsername()).get(0);
+		User user = userRepo.findByUserName(userModel.getUserName()).get(0);
 		return new UserModel(user.getId());
+	}
+
+	@Override
+	public UserModel getUserById(long userId) {
+		return convertToUserModel(userRepo.findById(userId).get());
 	}
 }

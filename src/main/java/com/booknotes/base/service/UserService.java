@@ -15,4 +15,5 @@ public interface UserService {
 	public List<UserModel> addUserInChain(UserModel userModel);
 	public List<UserModel> getAllChainedUser(Long userId);
 	public UserModel addBookToUser(UserModel userModel, BookModel bookModel);
+	public UserModel getUserById(long userId);
 }

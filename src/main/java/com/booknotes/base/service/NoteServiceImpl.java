@@ -47,7 +47,6 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public NoteModel deleteNote(NoteModel noteModel, boolean softDelete) {
-		
 		if (softDelete) {
 			Note note = noteRepository.findById(noteModel.getId()).get();
 			note.setDeleted(true);
@@ -124,7 +123,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public List<NoteModel> getAllMyNotes(long userId) {
-		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> note.getAuthorId() == userId).filter(note -> !note.isDeleted()).filter(note -> note.isPublish()).map(this::convertToNoteModel).collect(Collectors.toList());
+		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> note.getAuthorId() == userId).filter(note -> !note.isDeleted()).map(this::convertToNoteModel).collect(Collectors.toList());
 	}
 
 	@Override
@@ -137,6 +136,22 @@ public class NoteServiceImpl implements NoteService {
 			note.setDetails(noteModel.getDetails());
 		}
 		noteRepository.save(note);
+	}
+
+	@Override
+	public List<NoteModel> getAllNotesIncludingDeleted() {
+		return noteRepository.findAllByOrderByIdDesc().stream().map(this::convertToNoteModel).collect(Collectors.toList());
+		
+	}
+
+	@Override
+	public List<NoteModel> searchNotesByTags(String tagContent) {
+		String tags[] = tagContent != null && tagContent.length()> 0  ? tagContent.split("\\s") : null; 
+		return noteRepository.findAllByOrderByIdDesc().stream().		
+		filter(note -> !note.isDeleted()).
+		filter(note -> note.isPublish()).
+		filter(note -> note.getTags() != null && note.getTags().contains(tagContent)).
+		map(this::convertToNoteModel).collect(Collectors.toList());
 	}
 	
 	

@@ -23,7 +23,7 @@ public class UserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {		
 		List<UserModel> userDetails = userService.getUserByName(username);
 		if (userDetails != null && userDetails.size() > 0) {
-			return new User(userDetails.get(0).getUsername(), userDetails.get(0).getPassword(), new ArrayList<>());
+			return new User(userDetails.get(0).getUserName(), userDetails.get(0).getPassword(), new ArrayList<>());
 		}
 		return null;
 	}

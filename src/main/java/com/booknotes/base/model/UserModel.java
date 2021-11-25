@@ -17,7 +17,15 @@ public class UserModel {
 	}
 	private long Id;
 	private Long parentUserId;
-	private String username;
+	private String userName;
 	private String password;
 	private List<BookModel> myBooks = new ArrayList<>();
+	
+	private String topics;
+	private String email;
+	private String phoneNumber;
+	private String linkedInURL;
+	private String fullName;
+	private String hobbies;
+	private String aboutMe;
 }
