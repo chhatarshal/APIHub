@@ -141,19 +141,20 @@ public class NoteServiceImpl implements NoteService {
 	@Override
 	public List<NoteModel> getAllNotesIncludingDeleted() {
 		return noteRepository.findAllByOrderByIdDesc().stream().map(this::convertToNoteModel).collect(Collectors.toList());
-		
 	}
 
 	@Override
 	public List<NoteModel> searchNotesByTags(String tagContent) {
-		String tags[] = tagContent != null && tagContent.length()> 0  ? tagContent.split("\\s") : null; 
-		return noteRepository.findAllByOrderByIdDesc().stream().		
-		filter(note -> !note.isDeleted()).
-		filter(note -> note.isPublish()).
-		filter(note -> note.getTags() != null && note.getTags().contains(tagContent)).
-		map(this::convertToNoteModel).collect(Collectors.toList());
+		String tags[] = tagContent != null && tagContent.length() > 0  ? tagContent.split("\\s") : null; 
+		List<NoteModel> filteredNotes = noteRepository.findAllByOrderByIdDesc().stream().		
+				filter(note -> !note.isDeleted()).
+				filter(note -> note.isPublish()).
+				map(this::convertToNoteModel).collect(Collectors.toList());
+		for (String tag: tags) {
+			List<NoteModel> tempList = filteredNotes.stream().filter(note -> note.getTags() != null && 
+					note.getTags().toUpperCase().contains(tag.toUpperCase())).collect(Collectors.toList());
+			filteredNotes = tempList;
+		}
+		return filteredNotes;
 	}
-	
-	
-
 }
