@@ -111,6 +111,16 @@ public class BookNotesController {
 		return noteService.unpublishNote(noteId);
 	}
 	
+	@GetMapping("/marksticky")
+	public boolean markSticky(@RequestParam long userId,@RequestParam long noteId) {		 		
+		return userService.markSticky(userId, noteId, true);
+	}
+	
+	@GetMapping("/unmarksticky")
+	public boolean unmarkSticky(@RequestParam long userId, @RequestParam long noteId) {		 		
+		return userService.markSticky(userId, noteId, false);
+	}
+	
 	@GetMapping("/getAllNotes")
 	public List<NoteModel> getAllNotes() {
 		return noteService.getAllNotes();
@@ -132,8 +142,8 @@ public class BookNotesController {
 	}
 	
 	@GetMapping("/getAllPublishedNotes")
-	public List<NoteModel> getAllPublishedNotes() {
-		return noteService.getAllPublishedNotes();
+	public List<NoteModel> getAllPublishedNotes(@RequestParam long userId) {
+		return noteService.getAllPublishedNotes(userId);
 	}	
 	
 	@GetMapping("/getAllNoteById")

@@ -1,6 +1,7 @@
 package com.booknotes.base.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.booknotes.base.entity.Book;
+import com.booknotes.base.entity.Note;
 import com.booknotes.base.entity.User;
 import com.booknotes.base.model.BookModel;
 import com.booknotes.base.model.UserModel;
 import com.booknotes.base.repository.BookRepository;
+import com.booknotes.base.repository.NoteRepository;
 import com.booknotes.base.repository.UserRepository;
  
 @Service
@@ -24,7 +27,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private BookRepository bookRepo;	
 	
-
+	@Autowired
+	private NoteRepository noteRepo;	
+	
 	@Autowired
 	private BookRepository bookRepository;
 	 
@@ -103,5 +108,36 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserModel getUserById(long userId) {
 		return convertToUserModel(userRepo.findById(userId).get());
+	}
+	
+	@Override
+	public boolean markSticky(long userId, long noteId, boolean value) {
+		User user = userRepo.findById(userId).get();
+		String stickyNotesId = user.getMyStickyNotes();
+		if (stickyNotesId == null || stickyNotesId.length() < 1) {
+			if (!value) {
+				return false;
+			}
+			stickyNotesId = String.valueOf(noteId);
+			user.setMyStickyNotes(stickyNotesId);
+		} else {
+			if (value) {
+				String noteIds[] = stickyNotesId.split(",");
+				for (String noteIdVar : noteIds) {
+					if (noteIdVar.equals(String.valueOf(noteId))) {
+						// because this note id already present
+						return false;
+					}
+				}
+				stickyNotesId = stickyNotesId + "," + noteId;
+			} else {
+				String notes[] = stickyNotesId.split(",");
+				notes = Arrays.stream(notes).filter(note -> !note.equals(String.valueOf(noteId))).toArray(String[]::new);
+				stickyNotesId = String.join(",", notes);
+			}
+			user.setMyStickyNotes(stickyNotesId);
+		}
+		userRepo.save(user);
+		return true;
 	}
 }

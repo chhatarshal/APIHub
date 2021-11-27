@@ -28,4 +28,20 @@ public class UserModel {
 	private String fullName;
 	private String hobbies;
 	private String aboutMe;
+	private String myStickyNotes;
+	
+	public NoteModel markIfSticky(NoteModel note) {
+		if (getMyStickyNotes() == null || getMyStickyNotes().length() < 1) {
+			return note;
+		} else {
+			String myStickyNotes [] = getMyStickyNotes().split(",");
+			for (String noteId : myStickyNotes) {
+				if (noteId.equals(String.valueOf(note.getId()))) {
+					note.setSticky(true);
+					break;
+				}
+			}
+		}
+		return note;
+	}
 }

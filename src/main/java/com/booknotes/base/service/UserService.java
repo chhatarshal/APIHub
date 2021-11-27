@@ -16,4 +16,5 @@ public interface UserService {
 	public List<UserModel> getAllChainedUser(Long userId);
 	public UserModel addBookToUser(UserModel userModel, BookModel bookModel);
 	public UserModel getUserById(long userId);
+	public boolean markSticky(long userId, long noteId, boolean value);
 }

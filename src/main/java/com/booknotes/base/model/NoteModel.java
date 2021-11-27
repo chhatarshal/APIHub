@@ -28,4 +28,5 @@ public class NoteModel {
 	private long upvote;
 	private long authorId;
 	private String authorName;
+	private boolean sticky;
 }

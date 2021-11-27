@@ -14,7 +14,6 @@ public interface NoteService {
 	public List<NoteModel> getAllNotesForBook(BookModel bookModel);
 	public NoteModel deleteNote(NoteModel noteModel, boolean softDelete);
 	public NoteModel getNote(long id);
-	public List<NoteModel> getAllPublishedNotes();
 	public boolean publishNote(long noteId);
 	public boolean unpublishNote(long noteId);
 	public boolean notePrivacy(boolean privateState, long noteId);
@@ -23,4 +22,6 @@ public interface NoteService {
 	public void updateNote(NoteModel noteModel);
 	public List<NoteModel> getAllNotesIncludingDeleted();
 	public List<NoteModel> searchNotesByTags(String tagContent);
+	public List<NoteModel> getAllPublishedNotes(long userId);
+	
 }

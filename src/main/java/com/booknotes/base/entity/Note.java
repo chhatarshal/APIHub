@@ -38,5 +38,6 @@ public class Note {
 	private long authorId;
 	private String authorName;
 	private String title;
+	private boolean sticky;
 	
 }

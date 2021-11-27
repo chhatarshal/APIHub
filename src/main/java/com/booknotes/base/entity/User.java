@@ -42,5 +42,6 @@ public class User {
 	private String aboutMe;
 	private boolean individual;
 	private String organisationName;
+	private String myStickyNotes;
 
 }

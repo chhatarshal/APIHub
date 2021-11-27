@@ -1,5 +1,7 @@
 package com.booknotes.base.service;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,12 +21,20 @@ public class NoteServiceImpl implements NoteService {
 	
 	@Autowired
 	private NoteRepository noteRepository;
+	
+	@Autowired
+	private UserService userService;
 
 	private ModelMapper modelMapper = new ModelMapper();
 	
 	@Override
 	public NoteModel saveNote(NoteModel noteModel) {
-		noteRepository.save(this.convertToNote(noteModel));
+		boolean stickyNote = noteModel.isSticky();
+		noteModel.setSticky(false);
+		Note noteObj = noteRepository.save(this.convertToNote(noteModel));
+		if (stickyNote) {
+			userService.markSticky(noteModel.getAuthorId(), noteObj.getId(), true);
+		}
 		return noteModel;
 	}
 
@@ -69,16 +79,33 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public NoteModel getNote(long id) {
-		Note note = noteRepository.findById(id).get();
-		note.setViewCount(note.getViewCount() +1);
-		noteRepository.save(note);
+		Note note = noteRepository.findById(id).get();		
 		return convertToNoteModel(note);
 	}
 
 	@Override
-	public List<NoteModel> getAllPublishedNotes() {
-		return noteRepository.findAllByOrderByIdDesc().stream().filter(note -> !note.isDeleted()).
-				filter(note -> note.isPublish()).filter(note -> !note.isPrivateNote()).map(this::convertToNoteModel).collect(Collectors.toList());
+	public List<NoteModel> getAllPublishedNotes(long userId) {
+		UserModel userModel = userService.getUserById(userId);
+		String stickys = userModel.getMyStickyNotes();
+		List<String> stickyNoteIds = new LinkedList<>();
+		List<NoteModel> notes = new LinkedList<>();
+		if (stickys != null && !stickys.isEmpty()) {
+			for (String id : stickys.split(",")) {
+				stickyNoteIds.add(id);
+				NoteModel noteModel = this.getNote(Long.valueOf(id));
+			 	if (!noteModel.isDeleted() && noteModel.isPublish()) {
+					noteModel.setSticky(true);
+					notes.add(noteModel);
+				}			
+			}
+		}
+		List<NoteModel> allNotes = noteRepository.findAllByOrderByIdDesc().stream().filter(note -> !note.isDeleted())
+				.filter(note -> note.isPublish()).filter(note -> !note.isPrivateNote())
+				.filter(note -> !stickyNoteIds.contains(String.valueOf(note.getId())))
+				.map(this::convertToNoteModel).
+				 map(note -> userModel.markIfSticky(note)).collect(Collectors.toList());
+			 notes.addAll(allNotes);
+			 return notes;
 	}
 
 	@Override
@@ -157,4 +184,6 @@ public class NoteServiceImpl implements NoteService {
 		}
 		return filteredNotes;
 	}
+
+	
 }
