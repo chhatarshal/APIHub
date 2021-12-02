@@ -11,11 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.booknotes.base.entity.Book;
 import com.booknotes.base.entity.Note;
+import com.booknotes.base.entity.Settings;
 import com.booknotes.base.entity.User;
 import com.booknotes.base.model.BookModel;
+import com.booknotes.base.model.SettingsModel;
 import com.booknotes.base.model.UserModel;
 import com.booknotes.base.repository.BookRepository;
 import com.booknotes.base.repository.NoteRepository;
+import com.booknotes.base.repository.SettingsRepository;
 import com.booknotes.base.repository.UserRepository;
  
 @Service
@@ -32,6 +35,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private BookRepository bookRepository;
+	
+	@Autowired
+	private SettingsRepository settingsRepo;
 	 
 	private ModelMapper modelMapper = new ModelMapper();	
 
@@ -139,5 +145,22 @@ public class UserServiceImpl implements UserService {
 		}
 		userRepo.save(user);
 		return true;
+	}
+
+	@Override
+	public void saveSettings(SettingsModel settingsModel) {
+		User user = userRepo.findById(settingsModel.getUserId()).orElse(null);
+		if (user != null) {
+			Settings settings = convertToSettings(settingsModel);
+			user.setSettings(settings);
+			settings.setUserSettings(user);
+			settingsRepo.save(settings);
+		}
+		userRepo.save(user);
+	}
+
+	private Settings convertToSettings(SettingsModel settingsModel) {		 
+		Settings settings = modelMapper.map(settingsModel, Settings.class);	
+		return settings;
 	}
 }

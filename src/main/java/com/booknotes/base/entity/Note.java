@@ -1,10 +1,12 @@
 package com.booknotes.base.entity;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import lombok.Getter;
@@ -17,8 +19,12 @@ public class Note {
 	@Id
 	@GeneratedValue
 	private long id;
-	private String name;
+	private String name;	
+	@Lob 
+	@Column(name="CONTENT", length=512)
 	private String content;
+	@Lob 
+	@Column(name="NOTE_CONTENT", length=512)
 	private String details;
 	private String tags;
 	private String username;

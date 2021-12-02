@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.booknotes.base.model.BookModel;
 import com.booknotes.base.model.NoteModel;
+import com.booknotes.base.model.SettingsModel;
 import com.booknotes.base.model.UserModel;
 import com.booknotes.base.service.BookService;
 import com.booknotes.base.service.NoteService;
 import com.booknotes.base.service.UserService;
-
- 
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -39,14 +38,12 @@ public class BookNotesController {
 		return userService.saveUser(userModel);		
 	}	
 	
-	// add book for user
 	@PostMapping("/saveBook")
 	public BookModel addBook(@RequestBody BookModel bookModel) {
 		bookService.saveBook(bookModel);		
 		return bookModel;		
 	}
 	
-	// add book for user
 	@GetMapping("/getAllBooks")
 	public List<BookModel> getAllBooks() {		 		
 		return bookService.getAllBooks();		
@@ -95,6 +92,12 @@ public class BookNotesController {
 		return "Note updated";
 	}
 	
+	@PostMapping("/saveSettings")
+	public String saveSettings(@RequestBody SettingsModel settingsModel) {		 		
+		userService.saveSettings(settingsModel);
+		return "Settings Saved";
+	}
+	
 	@GetMapping("/deleteNote")
 	public String deleteNote(@RequestParam long noteId, @RequestParam(defaultValue = "true") boolean softDelete) {		 		
 		noteService.deleteNote(new NoteModel(noteId), softDelete);
@@ -112,7 +115,7 @@ public class BookNotesController {
 	}
 	
 	@GetMapping("/marksticky")
-	public boolean markSticky(@RequestParam long userId,@RequestParam long noteId) {		 		
+	public boolean markSticky(@RequestParam long userId, @RequestParam long noteId) {		 		
 		return userService.markSticky(userId, noteId, true);
 	}
 	

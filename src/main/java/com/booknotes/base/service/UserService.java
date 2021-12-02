@@ -3,6 +3,7 @@ package com.booknotes.base.service;
 import java.util.List;
 
 import com.booknotes.base.model.BookModel;
+import com.booknotes.base.model.SettingsModel;
 import com.booknotes.base.model.UserModel;
 
 public interface UserService {
@@ -17,4 +18,5 @@ public interface UserService {
 	public UserModel addBookToUser(UserModel userModel, BookModel bookModel);
 	public UserModel getUserById(long userId);
 	public boolean markSticky(long userId, long noteId, boolean value);
+	public void saveSettings(SettingsModel settingsModel);
 }

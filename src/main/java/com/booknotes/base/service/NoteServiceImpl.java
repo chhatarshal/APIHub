@@ -177,6 +177,7 @@ public class NoteServiceImpl implements NoteService {
 				filter(note -> !note.isDeleted()).
 				filter(note -> note.isPublish()).
 				map(this::convertToNoteModel).collect(Collectors.toList());
+		// to do handle null pointer exception here
 		for (String tag: tags) {
 			List<NoteModel> tempList = filteredNotes.stream().filter(note -> note.getTags() != null && 
 					note.getTags().toUpperCase().contains(tag.toUpperCase())).collect(Collectors.toList());

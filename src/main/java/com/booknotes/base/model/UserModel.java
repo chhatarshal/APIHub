@@ -44,4 +44,5 @@ public class UserModel {
 		}
 		return note;
 	}
+	private SettingsModel settingsModel;
 }

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -43,5 +44,7 @@ public class User {
 	private boolean individual;
 	private String organisationName;
 	private String myStickyNotes;
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "userSettings")
+	private Settings settings;
 
 }
