@@ -1,6 +1,7 @@
 package com.booknotes.base.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -167,6 +168,7 @@ public class NoteServiceImpl implements NoteService {
 
 	@Override
 	public List<NoteModel> getAllNotesIncludingDeleted() {
+		
 		return noteRepository.findAllByOrderByIdDesc().stream().map(this::convertToNoteModel).collect(Collectors.toList());
 	}
 
@@ -184,6 +186,20 @@ public class NoteServiceImpl implements NoteService {
 			filteredNotes = tempList;
 		}
 		return filteredNotes;
+	}
+
+	@Override
+	public List<NoteModel> getTrendingNotes() {
+		return noteRepository.findBydeletedFalseOrderByViewCountDesc().stream().
+				//.filter(note -> !note.isDeleted()).
+				map(this::convertToNoteModel).collect(Collectors.toList());
+
+	}
+
+	@Override
+	public List<NoteModel> getAllPublishedNotesByEmail(String email) {
+		return noteRepository.findByauthorNameIs(email).stream().filter(note -> !note.isDeleted()).
+				map(this::convertToNoteModel).collect(Collectors.toList());
 	}
 
 	

@@ -43,6 +43,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserModel saveUser(UserModel userModel) {
+		List<User> users = userRepo.findByEmailIs(userModel.getEmail());
+		 
+		if (users != null && users.size() > 0) {
+			userModel.setId(users.get(0).getId());
+			return userModel;
+		}
 		User user = userRepo.save(convertToUser(userModel));
 		userModel.setId(user.getId());
 		return userModel;

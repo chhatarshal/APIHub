@@ -129,6 +129,11 @@ public class BookNotesController {
 		return noteService.getAllNotes();
 	}
 	
+	@GetMapping("/getTrendingNotes")
+	public List<NoteModel> getTrendingNotes() {
+		return noteService.getTrendingNotes();
+	}
+	
 	@GetMapping("/searchNotesByTags")
 	public List<NoteModel> searchNotesByTags(@RequestParam String tagContent) {
 		return noteService.searchNotesByTags(tagContent);
@@ -147,7 +152,12 @@ public class BookNotesController {
 	@GetMapping("/getAllPublishedNotes")
 	public List<NoteModel> getAllPublishedNotes(@RequestParam long userId) {
 		return noteService.getAllPublishedNotes(userId);
-	}	
+	}
+	
+	@GetMapping("/outh/getAllPublishedNotesAuth")
+	public List<NoteModel> getAllPublishedNotesAuth(@RequestParam String email) {
+		return noteService.getAllPublishedNotesByEmail(email);
+	}
 	
 	@GetMapping("/getAllNoteById")
 	public NoteModel getAllNoteById(@RequestParam long noteId) {

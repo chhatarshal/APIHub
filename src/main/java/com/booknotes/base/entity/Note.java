@@ -1,5 +1,7 @@
 package com.booknotes.base.entity;
 
+import java.sql.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,5 +47,8 @@ public class Note {
 	private String authorName;
 	private String title;
 	private boolean sticky;
+	private boolean trending;
+	private Date created;
+	private String readTime;
 	
 }

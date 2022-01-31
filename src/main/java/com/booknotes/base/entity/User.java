@@ -46,5 +46,8 @@ public class User {
 	private String myStickyNotes;
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "userSettings")
 	private Settings settings;
+	private String image;
+	private String authtype;
+	private String name;
 
 }

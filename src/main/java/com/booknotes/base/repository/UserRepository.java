@@ -13,4 +13,5 @@ import com.booknotes.base.entity.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 	
 	public List<User> findByUserName(String userName);
+	public List<User> findByEmailIs(String email);
 }

@@ -29,6 +29,7 @@ public class UserModel {
 	private String hobbies;
 	private String aboutMe;
 	private String myStickyNotes;
+
 	
 	public NoteModel markIfSticky(NoteModel note) {
 		if (getMyStickyNotes() == null || getMyStickyNotes().length() < 1) {
@@ -45,4 +46,7 @@ public class UserModel {
 		return note;
 	}
 	private SettingsModel settingsModel;
+	private String image;
+	private String authtype;
+	private String name;
 }

@@ -23,5 +23,7 @@ public interface NoteService {
 	public List<NoteModel> getAllNotesIncludingDeleted();
 	public List<NoteModel> searchNotesByTags(String tagContent);
 	public List<NoteModel> getAllPublishedNotes(long userId);
+	public List<NoteModel> getTrendingNotes();
+	public List<NoteModel> getAllPublishedNotesByEmail(String email);
 	
 }

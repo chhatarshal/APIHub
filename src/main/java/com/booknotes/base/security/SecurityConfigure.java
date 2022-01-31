@@ -57,7 +57,7 @@ public class SecurityConfigure extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-	    web.ignoring().antMatchers("/booknotes/op/saveuser");
+	    web.ignoring().antMatchers("/booknotes/op/saveuser", "/booknotes/op/getTrendingNotes", "*/outh/*");
 	}
 	
 	
